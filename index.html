@@ -105,10 +105,12 @@
       transition: transform .05s ease, filter .15s ease;
     }
     button:active{ 
-    transform:scale(.98); box-shadow: 
-    0 0 10px rgb(0, 145, 255),
-    0 0 20px rgb(0, 145, 255),
-    0 0 40px rgb(0, 145, 255);}
+      transform:scale(.98);
+      box-shadow: 
+        0 0 10px rgb(0, 145, 255),
+        0 0 20px rgb(0, 145, 255),
+        0 0 40px rgb(0, 145, 255);
+    }
     button.secondary{
       background:linear-gradient(180deg, rgba(77,163,255,.22), rgba(77,163,255,.12));
       border:1px solid rgba(77,163,255,.35);
@@ -116,12 +118,12 @@
     button.danger{
       background:linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,107,107,.12));
       border:1px solid rgba(255,107,107,.35);
-
-    }button.danger:active{
-   box-shadow: 
-    0 0 10px rgb(211, 61, 61),
-    0 0 20px rgb(211, 61, 61),
-    0 0 40px rgb(211, 61, 61);
+    }
+    button.danger:active{
+      box-shadow: 
+        0 0 10px rgb(211, 61, 61),
+        0 0 20px rgb(211, 61, 61),
+        0 0 40px rgb(211, 61, 61);
     }
     button.ok{
       background:linear-gradient(180deg, rgba(61,220,151,.22), rgba(61,220,151,.12));
@@ -129,17 +131,24 @@
     }
     button.ok:active{
       box-shadow: 
-    0 0 10px rgb(67, 237, 95),
-    0 0 20px rgb(67, 237, 95),
-    0 0 40px rgb(67, 237, 95);
+        0 0 10px rgb(67, 237, 95),
+        0 0 20px rgb(67, 237, 95),
+        0 0 40px rgb(67, 237, 95);
     }
     button:disabled{
       opacity:.45; cursor:not-allowed; filter:grayscale(.25);
     }
-button.charging {
-  background-color: green;
-  color: white;
-}
+    button.charging {
+      background:linear-gradient(180deg, rgba(61,220,151,.35), rgba(30,160,100,.25));
+      border:1px solid rgba(61,220,151,.5);
+      color: #3ddc97;
+    }
+    button.charging:active{
+      box-shadow: 
+        0 0 10px rgb(61,220,151),
+        0 0 20px rgb(61,220,151),
+        0 0 40px rgb(61,220,151);
+    }
     .form{
       display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;
     }
@@ -174,52 +183,107 @@ button.charging {
     .small{ font-size:12px; }
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-      background:rgba(0,0,0,.55); color:var(--text);
-      padding:10px 12px; border-radius:999px;
+      background:rgba(0,0,0,.75); color:var(--text);
+      padding:10px 20px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       display:none;
+      z-index:9999;
+      white-space:nowrap;
     }
     .toast.show{display:block;}
     #loader {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: #121b2f; /* ili #0d0d0d za dark */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #e0e0e0;
-  border-top: 5px solid #28a745; /* zelena */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #070b14 0%, #0b1220 50%, #091022 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      gap: 32px;
+      transition: opacity 0.6s ease;
+    }
+    .loader-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeSlideIn 0.7s ease both;
+    }
+    .loader-logo img {
+      width: 220px;
+      height: auto;
+      filter: drop-shadow(0 0 24px rgba(77,163,255,0.25));
+    }
+    .loader-logo-text {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(159,176,208,0.7);
+    }
+    .loader-bar-wrap {
+      width: 200px;
+      height: 3px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 999px;
+      overflow: hidden;
+      animation: fadeSlideIn 0.7s ease 0.2s both;
+    }
+    .loader-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #4da3ff, #3ddc97);
+      animation: loadBar 2s cubic-bezier(.4,0,.2,1) forwards;
+      box-shadow: 0 0 10px rgba(77,163,255,0.6);
+    }
+    .loader-status {
+      font-size: 12px;
+      color: rgba(159,176,208,0.5);
+      letter-spacing: 1px;
+      animation: fadeSlideIn 0.7s ease 0.3s both;
+    }
+    @keyframes loadBar {
+      0%   { width: 0%; }
+      40%  { width: 55%; }
+      70%  { width: 78%; }
+      100% { width: 100%; }
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
 <div id="loader">
-  <div class="spinner"></div>
+  <div class="loader-logo">
+    <img src="img/thumbnaillogo.png" alt="Movex"
+         onerror="this.style.display='none'" />
+    
+  </div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-status">Učitavanje sistema...</div>
 </div>
 
 <div class="app">
-  <!-- Ovde ide tvoj sajt/app sadržaj -->
-
   <div class="wrap">
     <header>
       <div class="title">
-        <img src="img/thumbnaillogo.png" alt="Movex" style="width: 200px; height: auto;" />
-        <div class="sub">Offline status + tajmer + istorija (localStorage)</div>
+        <!-- POPRAVKA 1: uklonjen pogrešan "img/" prefix -->
+        <img src="img/thumbnaillogo.png" alt="Movex" style="width: 200px; height: auto;"
+             onerror="this.style.display='none'; document.getElementById('fallbackTitle').style.display='block';" />
+        <h1 id="fallbackTitle" style="display:none;">movexx Touch panel</h1>
+        <div class="sub">Status + tajmer + istorija</div>
       </div>
       <div class="row">
+        <button class="charging" id="btnCharging">🔋 Postavi na punjač</button>
         <button class="secondary" id="btnAdminReset">Admin reset</button>
       </div>
     </header>
@@ -244,19 +308,18 @@ button.charging {
         </div>
 
         <div class="form">
-          <input id="inputWho" placeholder="Ko uzima? (ime ili broj) npr. Stevan" />
+          <input id="inputWho" placeholder="Ko uzima? npr. Stevan" />
           <input id="inputNote" placeholder="Napomena (opciono) npr. hitno / servis" />
         </div>
         <div class="help">
-          Ako ne želiš “ko je uzeo”, ostavi prazno polje.  
-          Vreme prelazi u žuto posle 15 min, crveno posle 30 min .
+          Ako ne želiš "ko je uzeo", ostavi prazno polje.
+          Vreme prelazi u žuto posle 15 min, crveno posle 30 min.
         </div>
 
         <div class="row" style="margin-top:12px; gap:10px;">
           <button class="ok" id="btnTake">UZMI MOVEX</button>
           <button class="secondary" id="btnMove" disabled>PROMENI LOKACIJU</button>
           <button class="danger" id="btnReturn" disabled>VRATI MOVEX</button>
-          
         </div>
 
         <div style="margin-top:12px;">
@@ -287,111 +350,106 @@ button.charging {
           </thead>
           <tbody id="historyBody"></tbody>
         </table>
-
-        
       </section>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
 </div>
+
 <script>
-  //loader
- window.addEventListener("load", function() {
+  // loader
+  window.addEventListener("load", function() {
     const loader = document.getElementById("loader");
-
-    // minimalno 2 sekunde
-    const minTime = 2000; // 2000ms = 2 sekunde
+    const minTime = 2000;
     const startTime = Date.now();
-
     const hideLoader = () => {
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(minTime - elapsed, 0);
-
       setTimeout(() => {
         loader.style.opacity = "0";
         loader.style.transition = "opacity 0.5s";
-
-        setTimeout(() => {
-          loader.style.display = "none";
-        }, 500);
+        setTimeout(() => { loader.style.display = "none"; }, 500);
       }, remaining);
-    }
-
+    };
     hideLoader();
-  })
-  
+  });
+
   // ===== CONFIG =====
   const LOCATIONS = ["R-1","R-2","R-3","R-4","R-5"];
-  const WARN_MIN = 15;  // žuto posle 15 min
-  const BAD_MIN  = 30;  // crveno posle 30 min
+  const WARN_MIN = 15;
+  const BAD_MIN  = 30;
   const ADMIN_PIN = "1234";
   const STORAGE_KEY = "movex_state_v1";
   const HISTORY_KEY = "movex_history_v1";
 
+  // POPRAVKA 2: siguran storage koji radi i kad localStorage nije dostupan (Capacitor WebView)
+  const Storage = {
+    get(key) {
+      try { return localStorage.getItem(key); } catch(e) { return null; }
+    },
+    set(key, val) {
+      try { localStorage.setItem(key, val); } catch(e) {}
+    }
+  };
+
   // ===== STATE =====
-  // state = { status: "home"|"out", location: "Mesto"| "R-1"... , takenAt: epochMs|null, takenBy: string, note: string }
   const defaultState = () => ({
     status: "home",
     location: "Mesto",
     takenAt: null,
     takenBy: "",
-    note: ""
+    note: "",
+    charging: false
   });
 
   function loadState(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
+    try {
+      const raw = Storage.get(STORAGE_KEY);
       return raw ? JSON.parse(raw) : defaultState();
-    }catch(e){
-      return defaultState();
-    }
+    } catch(e) { return defaultState(); }
   }
 
   function saveState(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    Storage.set(STORAGE_KEY, JSON.stringify(state));
   }
 
   function loadHistory(){
-    try{
-      const raw = localStorage.getItem(HISTORY_KEY);
+    try {
+      const raw = Storage.get(HISTORY_KEY);
       return raw ? JSON.parse(raw) : [];
-    }catch(e){
-      return [];
-    }
+    } catch(e) { return []; }
   }
 
   function saveHistory(){
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    Storage.set(HISTORY_KEY, JSON.stringify(history));
   }
 
   let state = loadState();
   let history = loadHistory();
-  let pendingLocation = null; // klik na R-? pre potvrde
+  let pendingLocation = null;
 
   // ===== UI ELEMENTS =====
-  const whereText = document.getElementById("whereText");
-  const timerText = document.getElementById("timerText");
-  const takenByEl = document.getElementById("takenBy");
-  const takenAtEl = document.getElementById("takenAt");
-  const kpiLoc = document.getElementById("kpiLoc");
-  const kpiDur = document.getElementById("kpiDur");
-  const badgeState = document.getElementById("badgeState");
-  const stateText = document.getElementById("stateText");
-  const stateDot = document.getElementById("stateDot");
-
-  const inputWho = document.getElementById("inputWho");
-  const inputNote = document.getElementById("inputNote");
-
-  const btnTake = document.getElementById("btnTake");
-  const btnReturn = document.getElementById("btnReturn");
-  const btnMove = document.getElementById("btnMove");
+  const whereText    = document.getElementById("whereText");
+  const timerText    = document.getElementById("timerText");
+  const takenByEl    = document.getElementById("takenBy");
+  const takenAtEl    = document.getElementById("takenAt");
+  const kpiLoc       = document.getElementById("kpiLoc");
+  const kpiDur       = document.getElementById("kpiDur");
+  const badgeState   = document.getElementById("badgeState");
+  const stateText    = document.getElementById("stateText");
+  const stateDot     = document.getElementById("stateDot");
+  const inputWho     = document.getElementById("inputWho");
+  const inputNote    = document.getElementById("inputNote");
+  const btnTake      = document.getElementById("btnTake");
+  const btnReturn    = document.getElementById("btnReturn");
+  const btnMove      = document.getElementById("btnMove");
   const btnClearHistory = document.getElementById("btnClearHistory");
-  const btnAdminReset = document.getElementById("btnAdminReset");
-
-  const historyBody = document.getElementById("historyBody");
-  const locButtons = document.getElementById("locButtons");
-  const toast = document.getElementById("toast");
+  const btnAdminReset   = document.getElementById("btnAdminReset");
+  const btnCharging     = document.getElementById("btnCharging");
+  const historyBody  = document.getElementById("historyBody");
+  const locButtons   = document.getElementById("locButtons");
+  const toast        = document.getElementById("toast");
 
   // ===== HELPERS =====
   function pad2(n){ return String(n).padStart(2,"0"); }
@@ -415,7 +473,6 @@ button.charging {
 
   function fmtDateTime(epoch){
     const d = new Date(epoch);
-    // lokalno (tablet)
     return d.toLocaleString("sr-RS", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
   }
 
@@ -424,11 +481,11 @@ button.charging {
     toast.classList.add("show");
     setTimeout(()=>toast.classList.remove("show"), 1800);
   }
- 
+
   function setDot(level){
     stateDot.classList.remove("warn","bad");
     if(level === "warn") stateDot.classList.add("warn");
-    if(level === "bad") stateDot.classList.add("bad");
+    if(level === "bad")  stateDot.classList.add("bad");
   }
 
   function now(){ return Date.now(); }
@@ -441,7 +498,6 @@ button.charging {
       b.textContent = loc;
       b.addEventListener("click", ()=>{
         pendingLocation = loc;
-        // vizuelno označi izbor
         [...locButtons.querySelectorAll("button")].forEach(x=>x.classList.remove("secondary"));
         b.classList.add("secondary");
         showToast(`Izabrano: ${loc}`);
@@ -449,7 +505,7 @@ button.charging {
       locButtons.appendChild(b);
     });
   }
-  
+
   // ===== HISTORY =====
   function addHistoryItem(item){
     history.unshift(item);
@@ -481,20 +537,20 @@ button.charging {
       historyBody.appendChild(tr);
     });
   }
-function toggleGlow(btn) {
-  btn.classList.toggle("button");
-}
+
   // ===== RENDER STATE =====
   function render(){
     const isOut = state.status === "out";
-    const loc = isOut ? state.location : "Mesto";
+    const isCharging = state.status === "charging";
+    const loc = isOut ? state.location : (isCharging ? "Na punjaču 🔋" : "Mesto");
 
-    // main texts
     if(isOut){
       whereText.textContent = `Movex je: ${state.location}`;
       stateText.textContent = "U upotrebi";
-      badgeState.style.borderColor = "rgba(255,255,255,.12)";
-    }else{
+    } else if(isCharging){
+      whereText.textContent = "Movex je: Na punjaču 🔋";
+      stateText.textContent = "Na punjaču";
+    } else {
       whereText.textContent = "Movex je: Na označenom mestu";
       stateText.textContent = "Na mestu";
     }
@@ -502,31 +558,37 @@ function toggleGlow(btn) {
     takenByEl.textContent = state.takenBy ? state.takenBy : "—";
     takenAtEl.textContent = state.takenAt ? fmtDateTime(state.takenAt) : "—";
 
-    // buttons
-    btnReturn.disabled = !isOut;
-    btnMove.disabled = !isOut;
-    btnTake.disabled = isOut; // ne može uzmi ako je već uzet
+    // POPRAVKA 3: dugmad se uvek prikazuju, samo se menja disabled stanje
+    btnReturn.disabled  = !isOut;
+    btnMove.disabled    = !isOut;
+    btnTake.disabled    = isOut || isCharging;
+    btnCharging.disabled = isOut;
 
-    // KPI
+    // Charging button vizuelni state
+    if(isCharging){
+      btnCharging.textContent = "⚡ Na punjaču (klikni za povratak)";
+      btnCharging.style.opacity = "1";
+    } else {
+      btnCharging.textContent = "🔋 Postavi na punjač";
+      btnCharging.style.opacity = isOut ? "0.45" : "1";
+    }
+
     kpiLoc.textContent = loc;
     const ms = isOut && state.takenAt ? (now() - state.takenAt) : 0;
     kpiDur.textContent = fmtShortMin(ms);
-
-    // timer and colors
     timerText.textContent = fmtDuration(ms);
 
     const minutes = ms/60000;
     if(!isOut){
       setDot("ok");
-    }else if(minutes >= BAD_MIN){
+    } else if(minutes >= BAD_MIN){
       setDot("bad");
-    }else if(minutes >= WARN_MIN){
+    } else if(minutes >= WARN_MIN){
       setDot("warn");
-    }else{
+    } else {
       setDot("ok");
     }
 
-    // reset pending selection highlight
     pendingLocation = null;
     [...locButtons.querySelectorAll("button")].forEach(x=>x.classList.remove("secondary"));
   }
@@ -534,30 +596,26 @@ function toggleGlow(btn) {
   // ===== ACTIONS =====
   function takeMovex(){
     if(state.status === "out") return;
-
     if(!pendingLocation){
       showToast("Prvo izaberi lokaciju (R-1 do R-5).");
       return;
     }
-
     state.status = "out";
     state.location = pendingLocation;
     state.takenAt = now();
     state.takenBy = (inputWho.value || "").trim();
     state.note = (inputNote.value || "").trim();
-
     saveState();
     render();
     showToast(`Movex uzet → ${state.location}`);
   }
+
   function moveMovex(){
     if(state.status !== "out") return;
-
     if(!pendingLocation){
       showToast("Izaberi novu lokaciju (R-1 do R-5).");
       return;
     }
-
     state.location = pendingLocation;
     saveState();
     render();
@@ -566,10 +624,8 @@ function toggleGlow(btn) {
 
   function returnMovex(){
     if(state.status !== "out") return;
-
     const end = now();
     const dur = state.takenAt ? (end - state.takenAt) : 0;
-
     addHistoryItem({
       when: fmtDateTime(end),
       who: state.takenBy || "",
@@ -577,19 +633,28 @@ function toggleGlow(btn) {
       duration: fmtShortMin(dur),
       note: state.note || ""
     });
-
-    // reset
     state = defaultState();
     saveState();
-
-    // clear inputs for next time
     inputNote.value = "";
-    // inputWho može da ostane ako isti čovek često uzima; ali možeš očistiti:
-    // inputWho.value = "";
-
     render();
     renderHistory();
     showToast("Movex vraćen na mesto");
+  }
+
+  function toggleCharging(){
+    if(state.status === "out") return;
+    if(state.status === "charging"){
+      state.status = "home";
+      saveState();
+      render();
+      showToast("Movex skinut sa punjenja");
+    } else {
+      state.status = "charging";
+      state.takenAt = now();
+      saveState();
+      render();
+      showToast("Movex postavljen na punjač 🔋");
+    }
   }
 
   function clearHistory(){
@@ -607,18 +672,17 @@ function toggleGlow(btn) {
       return;
     }
     if(!confirm("Sigurno resetovati status na 'Na mestu'?")) return;
-
     state = defaultState();
     saveState();
     render();
     showToast("Resetovano (Na mestu)");
   }
 
-  
   // ===== WIRE =====
   btnTake.addEventListener("click", takeMovex);
   btnMove.addEventListener("click", moveMovex);
   btnReturn.addEventListener("click", returnMovex);
+  btnCharging.addEventListener("click", toggleCharging);
   btnClearHistory.addEventListener("click", clearHistory);
   btnAdminReset.addEventListener("click", adminReset);
 
@@ -630,16 +694,14 @@ function toggleGlow(btn) {
   // update timer every second
   setInterval(()=>{
     if(state.status === "out" && state.takenAt){
-      // samo ažuriraj tajmer/boje i KPI, bez resetovanja pending
       const ms = now() - state.takenAt;
       timerText.textContent = fmtDuration(ms);
       kpiDur.textContent = fmtShortMin(ms);
-
       const minutes = ms/60000;
       if(minutes >= BAD_MIN) setDot("bad");
       else if(minutes >= WARN_MIN) setDot("warn");
       else setDot("ok");
-    }else{
+    } else {
       timerText.textContent = "00:00:00";
       kpiDur.textContent = "0 min";
       setDot("ok");
