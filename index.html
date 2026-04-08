@@ -574,7 +574,8 @@
     }
 
     kpiLoc.textContent = loc;
-    const ms = isOut && state.takenAt ? (now() - state.takenAt) : 0;
+    const ms = (isOut || isCharging) && state.takenAt ? (now() - state.takenAt) : 0;
+    kpiDur.textContent = fmtShortMin(ms);
     kpiDur.textContent = fmtShortMin(ms);
     timerText.textContent = fmtDuration(ms);
 
@@ -693,19 +694,23 @@
 
   // update timer every second
   setInterval(()=>{
-    if(state.status === "out" && state.takenAt){
-      const ms = now() - state.takenAt;
-      timerText.textContent = fmtDuration(ms);
-      kpiDur.textContent = fmtShortMin(ms);
-      const minutes = ms/60000;
-      if(minutes >= BAD_MIN) setDot("bad");
-      else if(minutes >= WARN_MIN) setDot("warn");
-      else setDot("ok");
-    } else {
-      timerText.textContent = "00:00:00";
-      kpiDur.textContent = "0 min";
-      setDot("ok");
-    }
+    if((state.status === "out" || state.status === "charging") && state.takenAt){
+  const ms = now() - state.takenAt;
+  timerText.textContent = fmtDuration(ms);
+  kpiDur.textContent = fmtShortMin(ms);
+  if(state.status === "out"){
+    const minutes = ms/60000;
+    if(minutes >= BAD_MIN) setDot("bad");
+    else if(minutes >= WARN_MIN) setDot("warn");
+    else setDot("ok");
+  } else {
+    setDot("ok");
+  }
+} else {
+  timerText.textContent = "00:00:00";
+  kpiDur.textContent = "0 min";
+  setDot("ok");
+}
   }, 1000);
 </script>
 </body>
