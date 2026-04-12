@@ -376,12 +376,13 @@
   });
 
   // ===== CONFIG =====
-  const LOCATIONS = ["R-1","R-2","R-3","R-4","R-5"];
+  const LOCATIONS = ["R-1","R-2","R-3","R-4","R-5","Apretura","Pakovanje"];
   const WARN_MIN = 15;
   const BAD_MIN  = 30;
   const ADMIN_PIN = "1234";
   const STORAGE_KEY = "movex_state_v1";
   const HISTORY_KEY = "movex_history_v1";
+  
 
   // POPRAVKA 2: siguran storage koji radi i kad localStorage nije dostupan (Capacitor WebView)
   const Storage = {
@@ -576,7 +577,6 @@
     kpiLoc.textContent = loc;
     const ms = (isOut || isCharging) && state.takenAt ? (now() - state.takenAt) : 0;
     kpiDur.textContent = fmtShortMin(ms);
-    kpiDur.textContent = fmtShortMin(ms);
     timerText.textContent = fmtDuration(ms);
 
     const minutes = ms/60000;
@@ -593,7 +593,7 @@
     pendingLocation = null;
     [...locButtons.querySelectorAll("button")].forEach(x=>x.classList.remove("secondary"));
   }
-
+  
   // ===== ACTIONS =====
   function takeMovex(){
     if(state.status === "out") return;
